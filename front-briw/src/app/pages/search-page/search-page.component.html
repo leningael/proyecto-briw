@@ -22,7 +22,7 @@
       </div>
     </div>
     <ng-template #documentsList>
-      <app-documents-table *ngIf="documents.length > 0" [documents]="documents"></app-documents-table>
+      <app-documents-table *ngIf="documents.length > 0" [documents]="documents" [highlighting]="highlighting"></app-documents-table>
       <div *ngIf="notFound">
         <h5>No se encontraron resultados para "{{documentsToSearch}}"</h5>
         <div *ngIf="spellSuggestions.length > 0">

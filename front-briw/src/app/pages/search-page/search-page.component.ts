@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DocumentsSearchService } from '../../services/documents-search.service';
-import { DocumentResult, SpellSuggestion } from '../../interfaces/documents.interfaces';
+import { DocumentResult, SpellSuggestion, Highlighting } from '../../interfaces/documents.interfaces';
 
 @Component({
   selector: 'app-search-page',
@@ -10,6 +10,7 @@ import { DocumentResult, SpellSuggestion } from '../../interfaces/documents.inte
 export class SearchPageComponent implements OnInit {
   documentsToSearch: string = '';
   documents: DocumentResult[] = [];
+  highlighting!:Highlighting;
   suggestions: Array<[string, number]> = [];
   showSuggestions: boolean = false;
   spellSuggestions: SpellSuggestion[] = [];
@@ -42,8 +43,9 @@ export class SearchPageComponent implements OnInit {
     this.isLoading = true;
     this.documentsToSearch = searchTerm;
     this.docsService.searchDocuments(searchTerm).subscribe({
-      next: (documents) => {
-        this.documents = documents;
+      next: ({docs, highlighting}) => {
+        this.documents = docs;
+        this.highlighting = highlighting;
         this.isLoading = false;
       },
       error: (err) => {

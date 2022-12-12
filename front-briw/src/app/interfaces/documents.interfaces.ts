@@ -2,11 +2,20 @@ export interface SuggestionsResponse{
   keywords: Array<[string, number]>;
 }
 
+export interface SearchResponse{
+  docs: DocumentResult[];
+  highlighting: Highlighting;
+}
 export interface DocumentResult{
   id: string;
   title: string;
   description: string;
   score: number;
+}
+
+export interface Highlighting{
+  [key: string]: any;
+  description: [string];
 }
 
 export interface UploadResult{

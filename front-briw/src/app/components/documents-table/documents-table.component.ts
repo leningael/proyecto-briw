@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DocumentResult } from 'src/app/interfaces/documents.interfaces';
+import { DocumentResult, Highlighting } from 'src/app/interfaces/documents.interfaces';
 
 @Component({
   selector: 'app-documents-table',
@@ -8,6 +8,7 @@ import { DocumentResult } from 'src/app/interfaces/documents.interfaces';
 })
 export class DocumentsTableComponent implements OnInit {
   @Input() documents: DocumentResult[] = [];
+  @Input() highlighting!: Highlighting;
   constructor() { }
 
   ngOnInit(): void {
