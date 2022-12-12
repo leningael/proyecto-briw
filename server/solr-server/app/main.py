@@ -86,7 +86,15 @@ def search(facet= None,query = '*:*'):
         options['facet'] = 'true'
         options['facet.field'] = facet
         results = solr.search(query, **options)
-        filtered_res = {'facets': results.facets.get('facet_fields','No facet fields'), 'docs': results.docs, 'highlighting': results.highlighting}
+        dict_facets = []
+        
+        for i in range(0,len(results.facets["facet_fields"].get(facet,[])),2):
+            if results.facets["facet_fields"].get(facet,[])[i+1] != 0:
+                name = results.facets["facet_fields"].get(facet,[])[i]
+                count = results.facets["facet_fields"].get(facet,[])[i+1]
+                dict_facets.append({'name': name, 'count': count})
+        
+        filtered_res = {'facets': dict_facets, 'docs': results.docs, 'highlighting': results.highlighting}
         return filtered_res
     
     results = solr.search(query, **options)
