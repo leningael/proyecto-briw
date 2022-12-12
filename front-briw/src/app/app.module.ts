@@ -9,6 +9,9 @@ import { SearchPageComponent } from './pages/search-page/search-page.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { CrawlerPageComponent } from './pages/crawler-page/crawler-page.component';
+import { DebounceInputComponent } from './components/debounce-input/debounce-input.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DocumentsTableComponent } from './components/documents-table/documents-table.component';
 
 @NgModule({
   declarations: [
@@ -16,12 +19,15 @@ import { CrawlerPageComponent } from './pages/crawler-page/crawler-page.componen
     SearchPageComponent,
     SidebarComponent,
     CrawlerPageComponent,
+    DebounceInputComponent,
+    DocumentsTableComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
