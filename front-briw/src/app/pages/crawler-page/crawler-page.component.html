@@ -1,0 +1,21 @@
+<div class="d-flex flex-column flex-xxl-row h-100 align-items-xxl-center">
+  <div class="img-crawler d-flex col-12 col-xxl-6 order-1 order-xxl-0 px-xxl-5">
+    <img class="col-8 col-xxl-12 mx-auto" src="../../../assets/img/upload.svg" alt="Uploading docs">
+  </div>
+  <div class="col-12 col-xxl-6 order-0 order-xxl-1 px-xxl-5">
+    <h2>Index web pages</h2>
+    <hr>
+    <form [formGroup]="crawlerForm" (submit)="uploadDoc()">
+      <div class="mb-3">
+        <label for="url" class="form-label">URL to index</label>
+        <input formControlName="url" type="text" class="form-control" id="url" placeholder="https://www.google.com">
+      </div>
+      <button type="submit" class="btn btn-primary">
+        {{ isSaving ?  'Indexing...' : 'Start index'}}
+        <div *ngIf="isSaving" class="spinner-border spinner-border-sm text-light" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </button>
+    </form>
+  </div>
+</div>

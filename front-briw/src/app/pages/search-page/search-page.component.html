@@ -1,0 +1,53 @@
+<section class="d-flex flex-column h-100">
+  <h2>Buscador</h2>
+  <hr>
+  <div class="row mb-3">
+    <div class="col">
+      <app-debounce-input placeholder="Buscar documentos..." (onDebounce)="getSuggestions($event)" (onEnter)="searchDocuments($event)" #search></app-debounce-input>
+      <ul *ngIf="showSuggestions" class="list-group">
+        <li *ngFor="let suggestion of suggestions" class="list-group-item list-group-item-action" (click)="searchDocuments(suggestion[0])">
+          <a class="nav-link">{{suggestion[0]}}</a>
+        </li>
+        <li class="list-group-item list-group-item-action" (click)="searchDocuments(documentsToSearch)">
+          <a class="nav-link"> Buscar "{{documentsToSearch}}"</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <section class="flex-grow-1 overflow-auto">
+    <div class="row gap-2 flex-nowrap">
+      <div class="col">
+        <div *ngIf="isLoading; else documentsList" class="d-flex h-100 align-items-center justify-content-center">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        <ng-template #documentsList>
+          <app-documents-table *ngIf="documents.length > 0" [documents]="documents" [highlighting]="highlighting" [filterBy]="filterBy"></app-documents-table>
+          <div *ngIf="notFound">
+            <h5>No se encontraron resultados para "{{documentsToSearch}}"</h5>
+            <div *ngIf="spellSuggestions.length > 0">
+              <h5>Quisiste decir:</h5>
+              <div class="d-flex flex-wrap">
+                <button *ngFor="let suggestion of spellSuggestions" class="btn btn-outline-primary me-2 mb-2">
+                  <a (click)="searchDocuments(suggestion.word)">{{suggestion.word}}</a>
+                </button>
+              </div>
+            </div>
+            </div>
+        </ng-template>
+      </div>
+      <div *ngIf="!isLoading && facets.length > 0" class="col-2 border-2 border-start px-4" style="min-width: 230px;">
+        <h5 class="rounded text-white py-1 text-center" style="background-color: #185fc8;">Filtrado</h5>
+        <button *ngIf="filterBy" class="btn btn-outline-danger btn-sm w-100" (click)="filterFacet('')">Limpiar filtros</button>
+        <p class="fw-semibold my-2">Autor</p>
+        <ul class="list-group">
+          <li *ngFor="let facet of facets" class="list-group-item d-flex justify-content-between align-items-center" (click)="filterFacet(facet.name)">
+            {{facet.name}}
+            <span class="badge bg-primary rounded-pill">{{facet.count}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</section>
