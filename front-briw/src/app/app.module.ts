@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DocumentsTableComponent } from './components/documents-table/documents-table.component';
 
 import { ToastrModule } from 'ngx-toastr';
+import { FilterFacetPipe } from './pipes/filter-facet.pipe';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ToastrModule } from 'ngx-toastr';
     CrawlerPageComponent,
     DebounceInputComponent,
     DocumentsTableComponent,
+    FilterFacetPipe,
   ],
   imports: [
     BrowserModule,

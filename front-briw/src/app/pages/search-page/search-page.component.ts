@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DocumentsSearchService } from '../../services/documents-search.service';
-import { DocumentResult, SpellSuggestion, Highlighting } from '../../interfaces/documents.interfaces';
+import { DocumentResult, SpellSuggestion, Highlighting, Facet } from '../../interfaces/documents.interfaces';
+import { DebounceInputComponent } from '../../components/debounce-input/debounce-input.component';
 
 @Component({
   selector: 'app-search-page',
@@ -8,12 +9,15 @@ import { DocumentResult, SpellSuggestion, Highlighting } from '../../interfaces/
   styleUrls: ['./search-page.component.css']
 })
 export class SearchPageComponent implements OnInit {
+  @ViewChild('search') search!: DebounceInputComponent;
   documentsToSearch: string = '';
   documents: DocumentResult[] = [];
   highlighting!:Highlighting;
   suggestions: Array<[string, number]> = [];
   showSuggestions: boolean = false;
   spellSuggestions: SpellSuggestion[] = [];
+  facets: Facet[] = [];
+  filterBy: string = '';
   isLoading: boolean = false;
   notFound: boolean = false;
   constructor(private docsService:DocumentsSearchService) { }
@@ -22,6 +26,7 @@ export class SearchPageComponent implements OnInit {
   }
 
   getSuggestions(searchTerm: string){
+    this.notFound = false;
     if(this.documentsToSearch === searchTerm) return;
     this.documentsToSearch = searchTerm;
     (searchTerm) ? this.showSuggestions = true : this.showSuggestions = false;
@@ -37,15 +42,18 @@ export class SearchPageComponent implements OnInit {
 
   searchDocuments(searchTerm: string){
     if(!searchTerm) return;
+    this.search.searchInput.setValue('');
     this.showSuggestions = false;
     this.spellSuggestions = [];
+    this.facets = [];
     this.notFound = false;
     this.isLoading = true;
     this.documentsToSearch = searchTerm;
-    this.docsService.searchDocuments(searchTerm).subscribe({
-      next: ({docs, highlighting}) => {
+    this.docsService.searchDocuments(searchTerm, 'author').subscribe({
+      next: ({facets, docs, highlighting}) => {
         this.documents = docs;
         this.highlighting = highlighting;
+        this.facets = facets;
         this.isLoading = false;
       },
       error: (err) => {
@@ -69,5 +77,9 @@ export class SearchPageComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  filterFacet(facet: string){
+    this.filterBy = facet;
   }
 }

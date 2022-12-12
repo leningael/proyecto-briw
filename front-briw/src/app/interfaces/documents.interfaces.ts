@@ -3,11 +3,18 @@ export interface SuggestionsResponse{
 }
 
 export interface SearchResponse{
+  facets: Facet[];
   docs: DocumentResult[];
   highlighting: Highlighting;
 }
+
+export interface Facet{
+  name: string;
+  count: number;
+}
 export interface DocumentResult{
   id: string;
+  author: [string];
   title: string;
   description: string;
   score: number;

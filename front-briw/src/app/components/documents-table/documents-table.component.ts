@@ -9,6 +9,7 @@ import { DocumentResult, Highlighting } from 'src/app/interfaces/documents.inter
 export class DocumentsTableComponent implements OnInit {
   @Input() documents: DocumentResult[] = [];
   @Input() highlighting!: Highlighting;
+  @Input() filterBy: string = '';
   constructor() { }
 
   ngOnInit(): void {
