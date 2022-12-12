@@ -10,7 +10,12 @@
         <label for="url" class="form-label">URL to index</label>
         <input formControlName="url" type="text" class="form-control" id="url" placeholder="https://www.google.com">
       </div>
-      <button type="submit" class="btn btn-primary">Start index</button>
+      <button type="submit" class="btn btn-primary">
+        {{ isSaving ?  'Indexing...' : 'Start index'}}
+        <div *ngIf="isSaving" class="spinner-border spinner-border-sm text-light" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </button>
     </form>
   </div>
 </div>
