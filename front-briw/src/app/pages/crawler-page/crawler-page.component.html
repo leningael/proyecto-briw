@@ -5,10 +5,10 @@
   <div class="col-12 col-xxl-6 order-0 order-xxl-1 px-xxl-5">
     <h2>Index web pages</h2>
     <hr>
-    <form>
+    <form [formGroup]="crawlerForm" (submit)="uploadDoc()">
       <div class="mb-3">
         <label for="url" class="form-label">URL to index</label>
-        <input type="text" class="form-control" id="url" placeholder="https://www.google.com">
+        <input formControlName="url" type="text" class="form-control" id="url" placeholder="https://www.google.com">
       </div>
       <button type="submit" class="btn btn-primary">Start index</button>
     </form>

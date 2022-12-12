@@ -13,6 +13,8 @@ import { DebounceInputComponent } from './components/debounce-input/debounce-inp
 import { ReactiveFormsModule } from '@angular/forms';
 import { DocumentsTableComponent } from './components/documents-table/documents-table.component';
 
+import { ToastrModule } from 'ngx-toastr';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +29,12 @@ import { DocumentsTableComponent } from './components/documents-table/documents-
     HttpClientModule,
     AppRoutingModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
